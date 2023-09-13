@@ -1,0 +1,74 @@
+---
+title: "Reproducible Report Template"
+author: "Student/s SID"
+subtitle: "Project X"
+date: "University of Sydney | Unit of Study | Lab Class XXXXX"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: hide
+---
+
+<br>
+
+# Executive Summary
+- The aim of this report is to ...
+- The main discoveries are ...
+
+<br>
+
+# Full Report
+
+## Initial Data Analysis (IDA)
+
+- The data came from ...
+- The data is/is not valid because ...
+- Possible issues include ...
+- Potential stakeholders include...
+- Each row represents ...
+- Each column represents ...
+- The key variables are...
+
+```{r}
+## read in data
+
+## show classification of variables
+
+```
+
+
+<br>
+
+## Research Question 1: write research question here
+
+Insert text and analysis. 
+
+```{r}
+## write code here
+
+```
+
+
+<br>
+
+## Research Question 2: write research question here
+
+Insert text and analysis. 
+
+```{r}
+## write code here
+
+```
+
+
+<br>
+
+# References
+
+Put references here in APA format.
