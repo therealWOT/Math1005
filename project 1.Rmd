@@ -1,0 +1,88 @@
+---
+title: "Math1005 Project 1 (Group)"
+author: "Students SID 530646424, number_1, number_2, number_3"
+subtitle: "Project Covid Impact on Transport"
+date: "University of Sydney | Math1005 | Lab Class XXXXX"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: hide
+---
+
+<br>
+
+# Executive Summary
+- The aim of this report is to show how covid-19 has impacted NSW transport before and during the outbreak.
+- The main discoveries are (add text)
+
+<br>
+
+# Full Report
+## Initial Data Analysis (IDA)
+
+- The data came from: NSW Government Traffic Volume Viewer
+- The data is/is not valid because (add text)
+- Possible issues include (add text)
+- Potential stakeholders include (add text)
+- Each row represents (add text)
+- Each column represents (add text)
+- The key variables are (add text)
+
+```{r}
+## read in data
+
+## show classification of variables
+
+```
+- Total small vehicles in specific years. 
+- Total large vehicles in specific years. 
+- Total vehicles in specific years. 
+- % change in heavy vehicles before and after covid 
+- % change in light vehicles before and after covid 
+
+<br>
+
+## Research Question 1: Compare how traffic data has been impacted by COVID. Look at Pre-covid year and in-covid year (2019vs2021). Looking at Burns Bay Rd 
+
+Linear regression using daily traffic data 
+```{r}
+## write code here
+
+```
+- insert graph above this line^^^
+
+<br>
+
+## Research Question 2: How has this impacted on Heavy vs Light vehicles (looking at a residential road vs a commercial route). 
+
+Insert text and analysis. 
+
+```{r}
+## write code here
+
+```
+- insert graph above this line^^^
+
+<br>
+
+## Extra Question: Compare data to another road
+
+Insert text and analysis. 
+
+```{r}
+## write code here
+
+```
+- insert graph above this line^^^
+
+<br>
+
+# References
+
+Put references here in APA format.
