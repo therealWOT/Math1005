@@ -1,15 +1,15 @@
 # finds total cars per day for year xxxx
 getdata <- function(y){
-df = read.csv("32029 - Burns Bay Road.csv")
-frame = df[df$classification_seq == "All Vehicles",] #options for this = "All Vehicles", "Light Vehicles", "Heavy Vehicles"
-year = frame[frame$year == y,]
-direction = year[year$cardinal_direction_seq == "Northbound",] #options for this = "Northbound" or "Southbound"
-dailytraffic = rowSums(direction[,c(5:28)])
-filtereddaily = dailytraffic[complete.cases(dailytraffic)]
-filteredframe = direction[complete.cases(dailytraffic),]
-newframe = cbind(filteredframe,filtereddaily)
-newframe$date = as.Date(newframe$date, format = "%d/%m/%Y")
-return(newframe)
+  df = read.csv("32029 - Burns Bay Road.csv") #change this to the file location on your computer
+  frame = df[df$classification_seq == "All Vehicles",] #options for this = "All Vehicles", "Light Vehicles", "Heavy Vehicles"
+  year = frame[frame$year == y,]
+  direction = year[year$cardinal_direction_seq == "Northbound",] #options for this = "Northbound" or "Southbound"
+  dailytraffic = rowSums(direction[,c(5:28)])
+  filtereddaily = dailytraffic[complete.cases(dailytraffic)]
+  filteredframe = direction[complete.cases(dailytraffic),]
+  newframe = cbind(filteredframe,filtereddaily)
+  newframe$date = as.Date(newframe$date, format = "%d/%m/%Y")
+  return(newframe)
 }
 
 scatterplot <- function(y){
@@ -32,10 +32,9 @@ box <- function(y){
 
 
 comparebox <- function(y,z){
-a = getdata(y)
-b = getdata(z)
-
-boxplot(a$filtereddaily,b$filtereddaily, main = paste("Daily car traffic for", as.character(y), "and", as.character(z)), ylab = "Traffic volume", names = c(as.character(y),as.character(z)))
+  a = getdata(y)
+  b = getdata(z)
+  boxplot(a$filtereddaily,b$filtereddaily, main = paste("Daily car traffic for", as.character(y), "and", as.character(z)), ylab = "Traffic volume", names = c(as.character(y),as.character(z)))
 }
 
 
@@ -47,7 +46,3 @@ scatterplot(2021)
 residuals(2021)
 box(2021)
 comparebox(2021,2020)
-
-
-
-
