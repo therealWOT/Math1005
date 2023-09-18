@@ -14,13 +14,11 @@ output:
     toc_float: true
     code_folding: hide
 ---
-
 <br>
 
 # Executive Summary MAX 150 Words
 The aim of this report is to represent a relationship between COVID-19 lockdown restrictions and a reduction in traffic flow on a predominantly residential road by looking at periods before and during COVID-19 restrictions. The report will also examine changes in volume of heavy and light vehicles on a residential road against a more mixed-use road, that is commonly used for commercial trucking, like a motorway.
 Analysing traffic data on Burns Bay Road taken from the Transport for NSW Traffic Volume Viewer (Transport for NSW, 2023), it is clear that the volume of traffic decreased during the lockdown period between July 2021 and October 2021 compared to the same period in 2019. Compared to Burns Bay Road, the M1 highway had, on average, 9% more heavy traffic.
-
 
 
 <br>
