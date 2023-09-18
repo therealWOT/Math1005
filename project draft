@@ -1,0 +1,78 @@
+---
+title: "Traffic Volume Impacts of COVID-19 Lockdown Restrictions"
+author: "530646424, 510291482, William's SID, Sebastian's SID"
+subtitle: "How did COVID-19 affect traffic density?"
+date: "University of Sydney | MATH1005 | Thursday 10am Merewether 154"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: hide
+---
+
+<br>
+
+# Executive Summary MAX 150 Words
+The aim of this report is to represent a relationship between COVID-19 lockdown restrictions and a reduction in traffic flow on a predominantly residential road by looking at periods before and during COVID-19 restrictions. The report will also examine changes in volume of heavy and light vehicles on a residential road against a more mixed-use road, that is commonly used for commercial trucking, like a motorway.
+Analysing traffic data on Burns Bay Road taken from the Transport for NSW Traffic Volume Viewer (Transport for NSW, 2023), it is clear that the volume of traffic decreased during the lockdown period between July 2021 and October 2021 compared to the same period in 2019. Compared to Burns Bay Road, the M1 highway had, on average, 9% more heavy traffic.
+
+
+
+<br>
+
+# Full Report
+
+## Initial Data Analysis (IDA)
+
+- The raw data was retrieved from the Transport for NSW Traffic Volume Viewer. Burns Bay Road was chosen as it is a residential road with consistent data for the periods concerned and provides a contrast to a mixed-use road like the M1 Motorway. The data is valid because it is recorded in a consistent manner by regularly monitored and maintained traffic volume recording stations. The data is accessible as raw hourly traffic counts (Transport for NSW, 2023). The main data comes from traffic classification stations which record all traffic and classify between heavy and light vehicles (Transport for NSW, 2023). Some stations record only the volume of traffic, and these stations were discarded from the selection as they do not distinguish between heavy and light vehicles. 
+- There were two main issues faced in using this data: There were some inconsistencies in the data at times when the stations were out of operation. The second issue was that data is inconsistent across the state, and the viewer only provides consistent data for some parts of Sydney, so the analysis in this report cannot necessarily be generalised to wider Sydney or New South Wales. The raw data is classified by hour and distinguishes northbound from southbound. A heavy vehicle is described as having either a gross vehicle mass or aggregate trailer mass of more than 4.5 tonnes (Heavy Vehicle National Law (NSW), 2013).
+- The columns represent year, date, north/southbound, heavy, or light, and then each hour from 00 to 23. Each day is classified by six rows, each describing either north-or-south-bound vehicles, separating heavy, light and all.
+- Potential stakeholders include motorists in Sydney and entering and leaving Sydney via the M1, as well as residents using Burns Bay Road.
+- Independent variables analysed are the years or periods of years chosen, the classification of vehicle between heavy and light, and the classification of road as residential or mixed-use. The years were analysed using the data from each available day for each year in question. The main dependent variables were volume of traffic due to periods of time both prior to and during COVID-19 lockdown restrictions, and volume of heavy or light vehicles during the same periods.
+
+
+```{r}
+## read in data
+
+## show classification of variables
+
+```
+
+
+<br>
+
+## Research Question 1: write research question here 400 words
+
+Insert text and analysis. 
+
+```{r}
+## write code here
+
+```
+
+
+<br>
+
+## Research Question 2: write research question here 400 words
+
+Insert text and analysis. 
+
+```{r}
+## write code here
+
+```
+
+
+<br>
+
+# References
+
+Heavy Vehicle National Law 2013 (NSW) s 6.
+
+Transport for NSW. (2023). Traffic Volume Viewer. Retrieved from https://maps.transport.nsw.gov.au/egeomaps/traffic-volumes/#/?z=6
+
