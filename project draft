@@ -278,6 +278,69 @@ scatterplot(2019)
 ```
 
 
+## Extra Research Question: (enter stuff)
+
+Insert text and analysis. 
+
+```{r}
+# finds total cars per day for year y
+getdata <- function(y){
+df = read.csv("C:/Users/phoen/OneDrive/Desktop/Math1005/task/F3FWY001 - M1 Pacific Motorway.csv")
+frame = df[df$classification_seq == "All Vehicles",] #options for this = "All Vehicles", "Light Vehicles", "Heavy Vehicles"
+year = frame[frame$year == y,]
+direction = year[year$cardinal_direction_seq == "Northbound",] #options for this = "Northbound" or "Southbound"
+dailytraffic = rowSums(direction[,c(5:28)])
+filtereddaily = dailytraffic[complete.cases(dailytraffic)]
+filteredframe = direction[complete.cases(dailytraffic),]
+newframe = cbind(filteredframe,filtereddaily)
+newframe$date = as.Date(newframe$date, format = "%d/%m/%Y")
+return(newframe)
+}
+
+scatterplot <- function(y){
+  a = getdata(y)
+  plot(a$date,a$filtereddaily, main = paste("Car traffic in", as.character(y)),  ylab="Traffic Volume", xlab="Date")
+  abline(lm(a$filtereddaily~a$date), col="blue")
+}
+
+residuals <- function(y){
+  a = getdata(y)
+  l=lm(a$filtereddaily~a$date)
+  plot(a$date, l$residuals, main = paste("Residuals for car traffic in", as.character(y)), ylab="Residuals", xlab="Date")
+  abline(h=0, col="red")
+}
+box <- function(y){
+  a = getdata(y)
+  boxplot(a$filtereddaily, main = paste("Daily car traffic for", as.character(y)), ylab = "Traffic Volume", xlab = as.character(y))
+}
+
+
+
+comparebox <- function(y,z){
+a = getdata(y)
+b = getdata(z)
+
+boxplot(a$filtereddaily,b$filtereddaily, main = paste("Daily car traffic for", as.character(y), "and", as.character(z)), ylab = "Traffic volume", names = c(as.character(y),as.character(z)))
+}
+
+
+df = read.csv("C:/Users/phoen/OneDrive/Desktop/Math1005/task/F3FWY001 - M1 Pacific Motorway.csv") #change this to the file location on your computer
+frame = df[df$classification_seq == "All Vehicles",] #options for this = "All Vehicles", "Light Vehicles", "Heavy Vehicles"
+year = frame[(frame$year == 2019|frame$year == 2020),]#add more conditions for more years, | = or
+direction = year[year$cardinal_direction_seq == "Northbound",] #options for this = "Northbound" or "Southbound"
+dailytraffic = rowSums(direction[,c(5:28)])
+filtereddaily = dailytraffic[complete.cases(dailytraffic)]
+filteredframe = direction[complete.cases(dailytraffic),]
+newframe = cbind(filteredframe,filtereddaily)
+newframe$date = as.Date(newframe$date, format = "%d/%m/%Y")
+## show classification of variables
+plot(newframe$date,newframe$filtereddaily, main = "Daily vehicles recorded between 2019-2021", ylab = "Daily car count", xlab = "Date")
+scatterplot(2020)
+scatterplot(2019)
+residuals(2020)
+residuals(2019)
+comparebox(2020,2019)
+```
 <br>
 
 # References
