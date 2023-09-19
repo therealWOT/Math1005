@@ -36,7 +36,7 @@ Analysing traffic data on Burns Bay Road taken from the Transport for NSW Traffi
 
 ```{r}
 ## read in data
-# finds total cars per day for year xxxx
+# finds total cars per day for year y
 getdata <- function(y){
 df = read.csv("C:/Users/phoen/OneDrive/Desktop/Math1005/task/32029 - Burns Bay Road.csv")
 frame = df[df$classification_seq == "All Vehicles",] #options for this = "All Vehicles", "Light Vehicles", "Heavy Vehicles"
