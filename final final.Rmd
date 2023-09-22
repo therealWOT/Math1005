@@ -1,0 +1,232 @@
+---
+title: "Traffic Volume Impacts of COVID-19 Lockdown Restrictions"
+author: "530646424, 510291482, 530581468, Sebastian's SID"
+subtitle: "How did COVID-19 affect traffic density?"
+date: "University of Sydney | MATH1005 | Thursday 10am Merewether 154"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    self_contained: yes
+    theme: flatly
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: hide
+---
+
+<br>
+
+*Executive Summary*
+
+This report intends to analyse a relationship between COVID-19 Public Health Order lockdown restrictions in Sydney and a reduction in traffic volume on a predominantly residential road. This is done by examining periods before and during COVID-19 restrictions using data from the same residential road. The report will also examine a mixed-use road that is more commonly used for commercial trucking, like a motorway.
+
+Analysing traffic data from Beecroft Road, taken from the Transport for New South Wales Traffic Volume Viewer (Transport for New South Wales (TfNSW), 2023), it is clear that the volume of traffic decreased during the lockdown period from the end of June to the end of September 2021 compared with the same period in 2019. Data from the M1 Motorway, north of Sydney, was analysed for change in traffic volume on a mixed use road with a higher volume of heavy vehicles.
+
+<br>
+
+# Full Report
+
+## Initial Data Analysis (IDA)
+
+The raw data was retrieved from the transport for NSW Traffic Volume Viewer (TfNSW, 2023). Beecroft Road, Beecroft NSW was chosen as it is a residential road with consistent data recorded for the periods concerned and provides a contrast to a mixed-use road like the M1 Motorway. The data is consistent for the periods concerned, and for the purposes of analysis, missing values were easily filtered out. The data is accessible as raw hourly traffic counts (TfNSW, 2023). The main data is recorded via traffic classification stations which record all traffic and classify between heavy and light vehicles (TfNSW, 2023). The data is considered to be valid because of this consistency. Some stations record only traffic volume per hour and do not distinguish heavy and light vehicles, so these stations were discarded from the initial selection.
+
+The main issue faced in analysing the data were that the majority of stations had missing values on several days. The data is inconsistent across the state, with most stations concentrated in the greater Sydney region. Station incidence is not uniform across the city, so it should be cautioned that this report cannot necessarily be generalised to all parts of Sydney or non-metropolitan regions of New South Wales.
+
+The retrieved data is classified by the hour from 00 hours to 23 hours, and distinguishes cardinal directions as northbound and southbound, as well as heavy and light vehicles. A heavy vehicle is defined as having a gross vehicle mass or aggregate trailer mass of more than 4.5 tonnes ( *Heavy Vehicle National Law (NSW)*, 2013). For the purposes of this report, a residential road is defined as having no more than five percent heavy vehicle traffic in its overall volume according to the Traffic Volume Viewer (TfNSW, 2023). Beecroft Road has an average of five percent heavy vehicle traffic, whereas the M1 Motorway was recorded to have an average of sixteen percent heavy vehicle traffic. For the purposes of this report, the M1 Motorway is defined as a commercial or mixed-use road.
+
+The columns represent each year, date, cardinal direction, and then each hour from 00 to 23. Each day is classified by six rows to account for the cardinal directions of northbound and southbound, and each type of traffic volume recorded, separating heavy, light, and all. Potential stakeholders include motorists, commuters and commercial truck drivers entering and leaving Sydney via the M1, as well as residents and commuters using Beecroft Road and the surrounding areas.
+
+The independent variables analysed are the years or periods of years chosen to examine, the classification of vehicle between heavy and light, and the classification of road as residential or mixed-use. The years were analysed using data from each available day for the years in question. The main dependent variables were volume of traffic during periods of time both prior to and during COVID-19 lockdown restrictions, and volume of heavy or light vehicles during the same periods, on both residential and mixed-use roads. The data analysis is visualised with linear regression, residual plots and comparative boxplots where the median traffic volume is clear.
+
+```{r}
+getdata <- function(x,y,z){
+  if (x==1){
+    df = read.csv("74229 - Beecroft Road.csv")
+  }
+  else if (x==2){
+    df = read.csv("F3FWY001 - M1 Pacific Motorway.csv")
+  }
+  if (z==1){
+    frame = df[df$classification_seq == "All Vehicles",] # options for this = "All Vehicles", "Light Vehicles", "Heavy Vehicles"
+  }
+  else if (z==2){
+    frame = df[df$classification_seq == "Light Vehicles",]
+  }
+  else if (z==3){
+    frame = df[df$classification_seq == "Heavy Vehicles",]
+  }
+  year = frame[frame$year == y,]
+  direction = year[year$cardinal_direction_seq == "Southbound",] #options for this = "Northbound" or "Southbound"
+  dailytraffic = rowSums(direction[,c(5:28)])
+  filtereddaily = dailytraffic[complete.cases(dailytraffic)]
+  filteredframe = direction[complete.cases(dailytraffic),]
+  newframe = cbind(filteredframe,filtereddaily)
+  newframe$date = as.Date(newframe$date, format = "%d/%m/%Y")
+  return(newframe)
+}
+
+## read in data
+
+## show classification of variables
+
+```
+
+## How has COVID-19 impacted traffic volume on a residential road in Sydney?
+
+The data from the Traffic Volume Viewer (TfNSW, 2023) analysed for this report indicates that there was an overall reduction in traffic volume in 2021 when compared with Beecroft Road. According to the New South Wales Environmental Protection Authority's (EPA) State of the Environment Report (2022), the imposition of public health orders which defined strict movement and travel restrictions in July 2021 coincided with a decrease in traffic volumes when compared with pre-COVID-19 volumes.This is reflected in the median traffic volumes for both years, where the median volume of vehicles on Beecroft road in 2019 was 16145 and 2021 was 14275. It was found that in the decade prior to 2020, there had been a steady increase in the total distance traveled in Sydney, and New South Wales generally, coinciding with population growth in both Sydney and wider New South Wales during the same period (Australian Bureau of Statistics, 2020, cited in EPA, 2022). It is clear from the boxplot comparison of Beecroft Road in 2019 and 2021 that there was an overall reduction in traffic volume.
+
+Depressed traffic volumes were recorded globally, according to Chand, Yee, Alsultan and Dixit (2021). Residents had less capacity and fewer reasons to commute during public health orders as strict limits on the radius of travel were implemented as part of the public health orders ( *Public Health (COVID-19 Temporary Movement and Gathering Restrictions) Order 2021* (NSW)). Factors that influenced a reduction in traffic volume also included the capacity for more people to be able to work from home, as well as fewer recreation options available, such as eating and drinking at cafes, bars and restaurants due to capacity limits and a shutdown of the hospitality industry (Chand et al., 2021; Thomas, Charlton, Lewis & Nandavar, 2021; Alotaibi, & Khan, 2022).
+
+The decline in traffic volume on Beecroft Road in 2021 coincides with public health order restrictions. This indicates that for the local area, the overall traffic volume decrease was influenced by these restrictions and a reduction in the need to commute (Chand et al., 2021). While data cannot necessarily be generalised to greater Sydney or globally, depressed traffic volumes have been observed in many other cities globally (Aldred & Goodman, 2021; Chand et al., 2021; Kim, Lee, Ko, Jang & Yeo, 2021). This reduction was observed in residential boroughs of London, England (Aldred & Goodman, 2021), throughout Daejeon City, South Korea (Kim et al., 2021) and in Scotland (Semple, Fountas, & Fonzone, 2022).
+
+Overall, the reduction in traffic volume on Beecroft Road during the period of the 2021 COVID-19 lockdown in Sydney, when compared to the same period in 2019 is reflected in local, national and international research.
+
+```{r}
+#for all functions, first paramter = road (1 = Beecroft, 2 = M1), second parameter = year, third parameter = vehicle type (1 = All Vehicles, 2 = Light Vehicles, 3 = Heavy Vehicles)
+scatterplot <- function(x,y,z){
+  a = getdata(x,y,z)
+  if (x==1){
+    place = "Beecroft"
+  } else if (x==2){
+    place= "M1"
+  }
+  if (z==1){
+    traffic = "All Vehicles"
+  } else if (z==2){
+    traffic = "Light Vehicles"
+  } else if (z==3){
+    traffic = "Heavy Vehicles"
+  }
+  plot(a$date,a$filtereddaily, main = paste("Daily", traffic, "traffic volume in", place, as.character(y)),  ylab="Traffic Volume", xlab="Date")
+  abline(lm(a$filtereddaily~a$date), col="blue")
+}
+
+residuals <- function(x,y,z){
+  a = getdata(x,y,z)
+  if (x==1){
+    place = "Beecroft"
+  } else if (x==2){
+    place= "M1"
+  }
+  if (z==1){
+    traffic = "All Vehicles"
+  } else if (z==2){
+    traffic = "Light Vehicles"
+  } else if (z==3){
+    traffic = "Heavy Vehicles"
+  }
+  l=lm(a$filtereddaily~a$date)
+  plot(a$date, l$residuals, main = paste("Residuals for Daily", traffic, "traffic volume in", place, as.character(y)), ylab="Residuals", xlab="Date")
+  abline(h=0, col="red")
+}
+box <- function(x,y,z){
+  a = getdata(x,y,z)
+  if (x==1){
+    place = "Beecroft"
+  } else if (x==2){
+    place= "M1"
+  }
+  if (z==1){
+    traffic = "All Vehicles"
+  } else if (z==2){
+    traffic = "Light Vehicles"
+  } else if (z==3){
+    traffic = "Heavy Vehicles"
+  }
+  boxplot(a$filtereddaily, main = paste("Daily", traffic, "traffic volume in", place, as.character(y)), ylab = "Traffic Volume", xlab = as.character(y))
+}
+
+
+
+comparebox <- function(x,y1,y2,z){
+  a = getdata(x,y1,z)
+  b = getdata(x,y2,z)
+  if (x==1){
+    place = "Beecroft"
+  } else if (x==2){
+    place= "M1"
+  }
+  if (z==1){
+    traffic = "All Vehicles"
+  } else if (z==2){
+    traffic = "Light Vehicles"
+  } else if (z==3){
+    traffic = "Heavy Vehicles"
+  }
+  boxplot(a$filtereddaily,b$filtereddaily, main = paste("Daily", traffic, "traffic volume in", place, as.character(y1), "and", as.character(y2)), ylab = "Traffic volume", names = c(as.character(y1),as.character(y2)))
+}
+
+scatterplot(2,2019,1)
+scatterplot(1,2021,1)
+residuals(1,2019,1)
+residuals(1,2021,1)
+comparebox(1,2019,2021,1)
+
+paste("2019 Median Beecroft All Traffic Volume =", as.character(median(getdata(1,2019,1)$filtereddaily)))
+paste("2021 Median Beecroft All Traffic Volume =", as.character(median(getdata(1,2021,1)$filtereddaily)))
+
+
+
+
+```
+
+<br>
+
+## Did COVID-19 Restrictions change heavy vehicle volumes?
+
+The data for the M1 Motorway heavy vehicle traffic makes up sixteen percent of average traffic volume (TfNSW, 2023). This fits the report's criteria for mixed-use or commercial road. This section examines the change in heavy vehicle traffic compared with the change in light vehicle traffic on the M1. In comparison, heavy vehicle traffic only contributes five percent of overall Beecroft Road traffic, as expected with a more residential environment.
+
+According to Chand et al. (2021), COVID-19 restrictions had less impact on reducing the volume of heavy vehicles, as they form an essential part of a functional national supply chain and public services. This is reflected in the data analysed from the Traffic Volume Viewer (TfNSW, 2023) where there was an increase of 9% in heavy vehicle volume across the two periods. According to Freight Australia, cited by Chand et al. (2021), there was an increase in freight-truck travel during COVID-19 lockdown periods, in an attempt to meet high demand for goods. Chand et al. (2021) also suggest that the majority of heavy vehicles travel on roads like highways and motorways. This indicates that the majority of heavy vehicles on Beecroft Road are public transport buses, many of which were reduced to public holiday timetables due to a number of factors related to the COVID-19 pandemic.
+
+The demand for home deliveries and growth in e-commerce while people were living under COVID-19 restrictions contributed to an increase in demand for freight vehicles (Munawar, Khan, Qadir, Kouzani, & Mahmud, 2021). Some industries that rely on heavy vehicle transport saw an increase in demand for products, such as those in the medical industry, which contributed to an inflated need for road-freight services (Sperry, Schuster, Cotten, Agrwal, Mack, Britt, & Liberman, 2022). However, despite the increase in demand for heavy vehicle-related services, there was no significant change in heavy vehicle volumes during lockdown periods (Munawar et al., 2021). This is reflected in the comparison of heavy vehicle traffic volume in the periods in 2019 and 2021.
+
+The main reduction in traffic volume on the M1 motorway can be attributed to light vehicle reduction, with light traffic volumes 4% lower that in 2019. This is clear from the boxplot comparison of the M1. This is supported by the overall trend of a reduction in travel movements by motorists during periods of COVID-19 lockdown restrictions (Du, Rakha, Filali, Eldardiry, 2021).
+
+Overall, COVID-19 had an impact on traffic volume, most significantly seen in light vehicle volumes, both on residential roads and motorways. Both the data analysed for this report and the research support the observation that there was a downward trend on overall vehicle volume during periods of COVID-19 lockdown restrictions.
+
+```{r}
+comparebox(2,2019,2021,2)
+comparebox(2,2019,2021,3)
+m1L2019 = median(getdata(2,2019,2)$filtereddaily)
+m1L2021 = median(getdata(2,2021,2)$filtereddaily)
+m1H2019 = median(getdata(2,2019,3)$filtereddaily)
+m1H2021 = median(getdata(2,2021,3)$filtereddaily)
+paste("Percentage change in Median Daily Light Vehicle M1 traffic between 2019 and 2021 =", as.character(((m1L2021-m1L2019)*100)/m1L2019))
+paste("Percentage change in Median Daily Heavy Vehicle M1 traffic between 2019 and 2021 =", as.character(((m1H2021-m1H2019)*100)/m1H2019))
+
+
+
+```
+
+<br>
+
+## References
+
+Aldred, R., & Goodman, A. (2021). The Impact of Low Traffic Neighbourhoods on Active Travel, Car Use, and Perception of Local Environment during the COVID-19 Pandemic. *Findings*, March. DOI: 10.32866/001c.21390
+
+Alotaibi, E., & Khan, A. (2022). Impact of Covid-19 on the Hospitality Industry and Responding to Future Pandemic through Technological Innovation. *International Conference on Industry Sciences and Computer Science Innovation*, 204, 844-853. DOI: 10.1016/j.procs.2022.08.102
+
+Chand, S., Yee, E., Alsultan, A., & Dixit, V. V. (2021). A Descriptive Analysis on the Impact of COVID-19 Lockdowns on Road Traffic Incidents in Sydney, Australia. *International Journal of Environmental Research and Public Health*, 18(21), 11701. DOI: 10.3390/ijerph182111701
+
+Du, J.,Rakha, H. A., Filali, F., & Eldardiry, H. (2021). COVID-19 pandemic impacts on traffic system delay, fuel consumption and emissions. *International Journal of Transportation Science and Technology*, 10, 184-196. DOI: <https://doi.org/10.1016/j.ijtst.2020.11.003>
+
+*Heavy Vehicle National Law 2013* (NSW)
+
+Kim, S., Lee, S., Ko, E., Jang, K., & Yeo, J. (2021). Changes in car and bus usage amid the COVID-19 pandemic: Relationship with land use and land price. *Journal of Transport Geography*, 96, 103168. DOI: <https://doi.org/10.1016/j.jtrangeo.2021.103168>
+
+Mouratidis, K. (2021). How COVID-19 reshaped quality of life in cities: A synthesis and implications for urban planning. *Land Use Policy*, 111, 105772. DOI: <https://doi.org/10.1016/j.landusepol.2021.105772>
+
+Munawar, H. S., Khan, S. I., Qadir, Z., Kouzani, A. Z., & Mahmud, M. A. P. (2021). Insight into the Impact of COVID-19 Australian Transportation Sector: An Economic and Community-Based Perspective. *Sustainability*, 13, 1276. DOI: doi.org/10.3390/su13031276
+
+New South Wales Environmental Protection Authority. (2022). *New South Wales State of the Environment 2021*. Retrieved from <https://soe.epa.nsw.gov.au>
+
+*Public Health (COVID-19 Temporary Movement and Gathering Restrictions) Order 2021* (NSW)
+
+Semple, T., Fountas, G., & Fonzone, A. (2022). Sociodemographic Factors Affecting Outdoor Exercise Trips During the COVID-19 Lockdown. *Transportation Research Procedia*, 62, 760-766. DOI: 10.1016/j.trpro.2022.02.094
+
+Sperry, D., Schuster, A. M., Cotten, S. R., Agrawal, S., Mack, E., Britt, N., & Liberman, J. (2022). Trucking in the Era of COVID-19. *American Behavioural Scientist*, 0(0), 1-24. DOI: 10.1177/00027642211066039
+
+Thomas, F. M. F., Charlton, S. G., Lewis, I., & Nandavar, S. (2021). Commuting before and After COVID-19. *Transportation Interdisciplinary Perspectives*, 11, 100423. DOI: <https://doi.org/10.1016/j.trip.2021.100423>
+
+Transport for NSW. (2023). *Traffic Volume Viewer*. Retrieved from <https://maps.transport.nsw.gov.au/egeomaps/traffic-volumes/#/?z=6>
